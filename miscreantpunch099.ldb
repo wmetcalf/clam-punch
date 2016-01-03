@@ -58,4 +58,3 @@ MiscreantPunch.EvilMacro.CommonConstruct.6;Target:0;(0&1&2&3);D0CF11E0A1B11AE1;7
 MiscreantPunch.EvilMacro.PowerShellEnc.1;Target:2;(0&1);706f7765727368656c6c::i;2d656e63::i
 MiscreantPunch.EvilMacro.PowerShellExecBypass.1;Target:2;(0&1&2);706f7765727368656c6c::i;2d45786563::i;427950617373::i
 MiscreantPunch.EvilMacro.XMLSPLICE;Target:2;(0&1&2=0);224d::i;0/[\s\x22\x2b]*?S[\s\x22\x2b]*?X[\s\x22\x2b]*?M[\s\x22\x2b]*?L[\s\x22\x2b]*?[23][\s\x22\x2b]*?\.[\s\x22\x2b]*?X[\s\x22\x2b]*?M[\s\x22\x2b]*?L[\s\x22\x2b]*?H[\s\x22\x2b]*?T[\s\x22\x2b]*?T[\s\x22\x2b]*?P/ig;4d53584d4c322e584d4c48545450::i
-
