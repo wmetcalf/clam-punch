@@ -4,8 +4,10 @@ Edit the file /usr/share/clamav-unofficial-sigs/conf.d/00-clamav-unofficial-sigs
 
 and add the line..
 
-add_dbs="https://raw.githubusercontent.com/wmetcalf/clam-punch/master/miscreantpunch.ldb"
+add_dbs="https://raw.githubusercontent.com/wmetcalf/clam-punch/master/miscreantpunch099.ldb"
 
 Then
 
 sudo -u clamav /usr/sbin/clamav-unofficial-sigs
+
+I will no longer be updating the miscreantpunch.ldb file only the miscreantpunch099.ldb file which utilizes the 0.99 features.
