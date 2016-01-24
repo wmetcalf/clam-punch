@@ -78,3 +78,4 @@ MiscreantPunch.EvilMacro.ProcessCreationPrimitivesDLL;Target:2;(0&1&2&3&4&5&6&7&
 MiscreantPunch.EvilMacro.COBJRB.1;Target:2;(0&1&2);4372656174654f626a656374::i;7265706c616365::i;0/CreateObject\s*?\(\s*?Replace\s*?\(\s*?[\x22\x27][\x20-\x21\x23-\x26\x28-\x7e]+[\x22\x27]\s*?,\s*?[\x22\x27][\x20-\x21\x23-\x26\x28-\x7e]+[\x22\x27],\s*?[\x22\x27][\x22\x27]\s*?\)/i
 MiscreantPunch.PiratedOfficeVersionWMacrosXBAG.1;Target:2;(0&1&2&3);52655061636b206279204469616b6f76::iwa;0456424136;0456424137;56697375616c20426173696320466f72204170706c69636174696f6e::iwa
 MiscreantPunch.MACRO.STRVGCOCBN;Target:2;(0&1&2);43616c6c42794e616d65::i;4372656174654f626a656374::i;5374725265766572736528225445472229::i
+MiscreantPunch.Macro.AOShellEXE;Target:2;((0|1)&2&3&4&5);4175746f4f70656e::i;4175746f5f4f70656e::i;5368656c6c::i;2e657865::i;56697375616c20426173696320466f72204170706c69636174696f6e73::iwa;4/\bShell\s*?\x28/i
