@@ -18,8 +18,7 @@ parser.add_option("--or",dest="do_or", action="store_true", default=False, help=
 strings = options.input_target.split(",")
 strings2 = []
 autostrings2 = []
-autostrings = ["Document_Open","Document_Close","Worksheet_Open","Auto_Open","AutoOpen","Workbook_Open","Auto_Close","AutoClose"]
-
+autostrings = ["InkPicture1_Painted","AutoExec","AutoOpen","Auto_Open","AutoClose","Auto_Close","AutoExit","AutoNew","DocumentOpen","Document_Open","DocumentClose","Document_Close","DocumentBeforeClose","DocumentChange","Document_New","NewDocument","Workbook_Open","WorkbookOpen","Workbook_Activate","Workbook_Close"]
 def build_opt_string():
     optstr = ""
     if options.i or options.a or options.w or options.f:
