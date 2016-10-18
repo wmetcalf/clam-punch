@@ -6,6 +6,9 @@ and add the line..
 
 add_dbs="https://raw.githubusercontent.com/wmetcalf/clam-punch/master/miscreantpunch099.ldb"
 
+if you want to run the single byte EXE XOR sigs also add 
+add_dbs="https://raw.githubusercontent.com/wmetcalf/clam-punch/master/exexor99.ldb"
+
 Then
 
 sudo -u clamav /usr/sbin/clamav-unofficial-sigs
