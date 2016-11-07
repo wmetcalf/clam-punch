@@ -13,7 +13,7 @@ parser.add_option("-a",dest="a", action="store_true", default=False, help="Enabl
 parser.add_option("-w",dest="w", action="store_true", default=False, help="Enable wide flag default is false")
 parser.add_option("-f",dest="f", action="store_true", default=False, help="Enable fullword flag default is false")
 parser.add_option("--or",dest="do_or", action="store_true", default=False, help="Make an or set of matches instead of and")
-
+parser.add_option("--ppstr",dest="ppstr", action="store_true", default=False,help="prepend single byte strlen")
 (options, args) = parser.parse_args()
 strings = options.input_target.split(",")
 strings2 = []
@@ -36,7 +36,11 @@ def build_opt_string():
 for entry in autostrings:
     autostrings2.append(entry.encode("hex"))
 for entry in strings:
-    strings2.append(entry.encode("hex"))
+    if options.ppstr and len(entry) < 255:
+        strlen = "%0.2X" % len(entry)
+        strings2.append("%s%s" % (strlen,entry.encode("hex")))
+    else:
+        strings2.append(entry.encode("hex"))
 if not strings:
    print "need a set of target strings via -t"
    sys.exit(-1)
