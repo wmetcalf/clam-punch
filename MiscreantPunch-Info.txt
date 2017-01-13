@@ -1,0 +1,27 @@
+MiscreantPunch-Info.txt
+
+This ruleset is provided as-is and signatures may cause false positive/negative. Use at your own risk.
+
+The MiscreantPunch099-Low.ldb ruleset is a ClamAV ruleset optimized for the 099 engine and above. This ruleset will not work with antiquated engines (without some changes to the signatures). This is on purpose, as 099 and above offers much better detection capabilities. 
+
+The MiscreantPunch099-Low.ldb ruleset contains comprehensive rules for detecting malicious or abnormal Macros, JS, HTA, HTML, XAP, JAR, SWF, and more. The vernacular this ruleset uses is as follows:
+
+MiscreantPunch -- Name of this ruleset.
+EvilMacro -- Observed malicious Office doc macros
+MultiPSDL - Multiple payloads retrieved via Powershell Download
+PSDL - Powershell Download 
+M* - Alternative method
+JS - JavaScript
+VBSDL - Visual Basic Downloader
+MultiDL - Multiple payloads via Downloader
+DL - Downloader
+UnkDL - Unknown payload via Download
+SWF - Flash
+RTF - Rich Text Format
+XAP - Silverlight
+JAR - Java
+etc
+
+The MiscreantPunch099-INFO-Low.ldb ruleset contains a small collection of signatures that can provide context to various files. Info and Suspicious level signatures may inform analysts of potentially interesting conditions that exist within a document. For example, the signature 'MiscreantPunch.INFO.EXEInsideOfDoc' isn't necessarily malicious, but rather informs an analyst of a present condition.
+
+Please report false positives to jack@malwarefor.me or open a ticket on the GitHub (wmetcalf/clam-punch), or hit the ClamAV mailing list.
