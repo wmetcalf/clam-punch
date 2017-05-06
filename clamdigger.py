@@ -49,7 +49,7 @@ if not options.sname:
    print "need a signame via -s"
    sys.exit(-1)
 
-sig = options.sname + ";Target:%s;(" % (options.target)
+sig = options.sname + ";Engine:81-255,Target:%s;(" % (options.target)
 if options.do_or:
     sig = sig + "("
 i = 0
