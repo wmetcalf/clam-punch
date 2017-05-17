@@ -633,3 +633,4 @@ MiscreantPunch.RTF.EvilRTF.CVE-2017-0199.MWI;Engine:81-255,Target:2;(0&1);E0C9EA
 MiscreantPunch.EXEInsideOfRTF.2;Engine:81-255,Container:CL_TYPE_RTF,Target:1;(0);0:4d5a{19-}546869732070726f6772616d20
 MiscreantPunch.EvilDoc.Hancitor.170516;Engine:81-255,Target:2;(0&1&2);214e4f495345;4d6163726f73::w;5c564245(36|37)2e444c4c::iw
 MiscreantPunch.EvilDoc.Hancitor.170517;Engine:81-255,Target:2;(0&1&2);215452555354;4d6163726f73::w;5c564245(36|37)2e444c4c::iw
+MiscreantPunch.EvilMacro.MultiPSDL.170517;Engine:81-255,Target:2;(0&1&2);4174747269627574652056425f4e616d65203d2022{3-10}220d0a46756e6374696f6e20{3-20}28290d0a53657420{3-10}203d204372656174654f626a6563742822577363726970742e5368656c6c22290d0a{3-10}2e52756e20{3-10}2c20766248696465;536574;1/\s*(?P<var>[a-z]{3,10})\s*=\s*CreateObject\(\"Wscript\.Shell\"\)\s+(?P=var)\s*\.\s*Run\s*[^\,]+,\s*vbHide\s+End\s+Function/si
