@@ -2,11 +2,25 @@
 import re
 import sys
 from optparse import OptionParser
-
+targetstring="""0 = any file\n
+1 = Portable Executable, both 32- and 64-bit.;\n
+2 = file inside OLE2 container (e.g. image, embedded executable, VBA;\n
+script). The OLE2 format is primarily used by MS Office and MSI installa-tion files.;\n
+3 = HTML (normalized: whitespace transformed to spaces, tags/tag at-tributes normalized, all lowercase), Javascript is normalized too: all strings
+are normalized (hex encoding is decoded), numbers are parsed and normal-ized, local variables/function names are normalized to n001 format, argu-ment to eval() is parsed as JS again, unescape() is handled, some simple JS packers are handled, output is whitespace normalized.;\n
+4 = Mail file;\n
+5 = Graphics;\n
+6 = ELF;\n
+7 = ASCII text file (normalized);\n
+8 = Unused;\n
+9 = Mach-O files;\n
+10 = PDF files;\n
+11 = Flash files;\n
+12 = Java class files;"""
 parser = OptionParser(usage="https://www.youtube.com/watch?v=ioWC-sT0iZI")
 parser.add_option("-t", dest="input_target", type="string", help="target string for conversion")
 parser.add_option("--auto",dest="auto", action="store_true", default=False, help="add auto open/close strings if you are doing macro things")
-parser.add_option("--target",dest="target", type="int", default=2, help="it's a clamav target, it's a number")
+parser.add_option("--target",dest="target", type="int", default=2, help="it's a clamav target, it's a number. From clamav man:%s" % (targetstring))
 parser.add_option("-s", dest="sname", type="string", help="the sig name dumb-dumb")
 parser.add_option("-i",dest="i", action="store_false", default=True, help="Disable case insensitive matches")
 parser.add_option("-a",dest="a", action="store_true", default=False, help="Enable ascii flag default is false")
