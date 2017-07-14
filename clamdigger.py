@@ -28,6 +28,7 @@ parser.add_option("-w",dest="w", action="store_true", default=False, help="Enabl
 parser.add_option("-f",dest="f", action="store_true", default=False, help="Enable fullword flag default is false")
 parser.add_option("--or",dest="do_or", action="store_true", default=False, help="Make an or set of matches instead of and")
 parser.add_option("--ppstr",dest="ppstr", action="store_true", default=False,help="prepend single byte strlen")
+parser.add_option("--wide",dest="wide", action="store_true", default=False,help="convert all strings to wide matches useful as it seems clamav does global matching with ::w option")
 (options, args) = parser.parse_args()
 strings = options.input_target.split(",")
 strings2 = []
@@ -53,6 +54,13 @@ for entry in strings:
     if options.ppstr and len(entry) < 255:
         strlen = "%0.2X" % len(entry)
         strings2.append("%s%s" % (strlen,entry.encode("hex")))
+    if options.wide:
+        i = 0
+        newstr = ""
+        while i < len(entry):
+           newstr = newstr + "00{0}".format(entry[i].encode("hex"))
+           i = i + 1
+        strings2.append(newstr)
     else:
         strings2.append(entry.encode("hex"))
 if not strings:
