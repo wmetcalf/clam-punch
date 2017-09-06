@@ -29,11 +29,14 @@ parser.add_option("-f",dest="f", action="store_true", default=False, help="Enabl
 parser.add_option("--or",dest="do_or", action="store_true", default=False, help="Make an or set of matches instead of and")
 parser.add_option("--ppstr",dest="ppstr", action="store_true", default=False,help="prepend single byte strlen")
 parser.add_option("--wide",dest="wide", action="store_true", default=False,help="convert all strings to wide matches useful as it seems clamav does global matching with ::w option")
+parser.add_option("--exeprime",dest="exeprime",action="store_true",default=False,help="add process execution primitives observed in macros")
 (options, args) = parser.parse_args()
 strings = options.input_target.split(",")
 strings2 = []
 autostrings2 = []
+execution_primitives2 = []
 autostrings = ["InkPicture1_Painted","AutoExec","AutoOpen","Auto_Open","AutoClose","Auto_Close","AutoExit","AutoNew","DocumentOpen","Document_Open","DocumentClose","Document_Close","DocumentBeforeClose","DocumentChange","Document_New","NewDocument","Workbook_Open","WorkbookOpen","Workbook_Activate","Workbook_Close"]
+execution_primitives =[".run","shell","SHCreateThread","RtlMoveMemory","WriteProcessMemory","WriteVirtualMemory","CallWindowProc","EnumResourceTypes","EnumSystemLanguageGroups","EnumUILanguages","EnumDateFormats","EnumCalendarInfo","EnumTimeFormats","SHCreateThread","GrayString","CreateTimerQueueTimer","CreateProcess","Win32_Process"]
 def build_opt_string():
     optstr = ""
     if options.i or options.a or options.w or options.f:
@@ -50,6 +53,8 @@ def build_opt_string():
 
 for entry in autostrings:
     autostrings2.append(entry.encode("hex"))
+for entry in execution_primitives:
+    execution_primitives2.append(entry.encode("hex"))
 for entry in strings:
     if options.ppstr and len(entry) < 255:
         strlen = "%0.2X" % len(entry)
@@ -91,8 +96,26 @@ if options.auto:
     while i < (len(strings2) + len(autostrings2)):
         sig = sig + "%s|" % (i)
         i = i + 1
+    if options.exeprime:
+        sig = sig[:-1]
+        sig = sig + ")&("
+        while i < (len(strings2) + len(autostrings2) + len(execution_primitives2)):
+            sig = sig + "%s|" % (i)
+            i = i + 1
     sig = sig[:-1]
     sig = sig + "));"
+elif options.exeprime:
+    if options.do_or:
+        sig = sig[:-1]
+        sig = sig + ")&("
+    else:
+        sig = sig + "("
+    while i < (len(strings2) + len(execution_primitives2)):
+        sig = sig + "%s|" % (i)
+        i = i + 1
+    sig = sig[:-1]
+    sig = sig + "));"
+
 else:
     sig = sig[:-1]
     sig = sig + ");"
@@ -102,4 +125,8 @@ optstr3b = optstr + ";"
 sig = sig +  optstr3b.join(strings2) + optstr
 if options.auto:
     sig = sig + ";" + optstr3b.join(autostrings2) + optstr
+    if options.exeprime:
+        sig = sig + ";" + optstr3b.join(execution_primitives2) + optstr
+elif options.exeprime:
+    sig = sig + ";" + optstr3b.join(execution_primitives2) + optstr
 print sig
