@@ -12,7 +12,7 @@ except:
     HAVE_BASS = False
 
 if not HAVE_BASS:
-    print("You must be all about that b.a.s.s.... https://github.com/Cisco-Talos/BASS/tree/master/bass You must build the python module.")
+    print("You must be all about that b.a.s.s.... https://github.com/Cisco-Talos/BASS/tree/master/bass\nsudo yum -y install graphviz graphviz-devel\ngit clone https://github.com/Cisco-Talos/BASS.git\ncd BASS/bass/python\nsudo python setup.py install")
     sys.exit(0)
 
 targetstring="""0 = any file\n
