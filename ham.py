@@ -1,5 +1,9 @@
 #!/usr/bin/python
-import re
+try:
+    import re2 as re
+except ImportError:
+    import re
+
 import sys
 from optparse import OptionParser
 import glob
@@ -43,6 +47,8 @@ parser.add_option("-i",dest="nocase", action="store_true", default=False,help="m
 
 include_regex = None
 target_strings = []
+matches = []
+misses = []
 
 if options.i_re:
     try:
@@ -80,6 +86,7 @@ elif(options.dir):
        sys.exit(-1)
     if len(flist) > 1:
         for entry in flist:
+            print entry
             dapoop=open(entry).read()
             if options.normwhite:
                 dapoop = re.sub(r'[\r\n\s\t]+',"\x20",dapoop)
@@ -87,19 +94,44 @@ elif(options.dir):
                 m=include_regex.search(dapoop)
                 if m and m.group(0) not in target_strings:
                     target_strings.append(m.group(0))
+                    matches.append(entry)
+                else:
+                    misses.append(entry)
+
             elif dapoop not in target_strings:
                 target_strings.append(dapoop)
-
+print "finished loading files"
 if not options.sname:
    print "need a signame via -s"
    sys.exit(-1)
 
 sig = options.sname + ";Engine:81-255,Target:%s;(0);" % (options.target)
+if include_regex:
+    for entry in matches:
+        print("match: {0}".format(entry))
+    for entry in misses:
+        print("miss: {0}".format(entry))
+    print("Matches:{0}, Misses:{1}\n".format(len(matches),len(misses)))
 
+if include_regex:
+    for entry in matches:
+        print("match: {0}".format(entry)) 
+    for entry in misses:
+        print("miss: {0}".format(entry))
+    print("Matches:{0}, Misses:{1}\n".format(len(matches),len(misses)))
+    if len(matches) == 0:
+       print("not going to generate sig no files matched the regex")
+       sys.exit(-1)
+    elif len(matches) == 1:
+       print("not going to generate sig only one one file matched the regex {0}".format(matches[0]))
+       sys.exit(-1)
+print("finding klcs")
 common = hamming_klcs(target_strings)
+print("steaming dem clams")
 ndb = ndb_from_common_sequence(target_strings, common)
 if options.nocase:
     ndb = ndb + "::i"
 if options.maxsplit > 0:
     ndb = re.sub(r'\*',"{0-%s}" % (options.maxsplit),ndb)
+
 print("{0}{1}".format(sig,ndb))
