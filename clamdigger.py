@@ -36,7 +36,7 @@ strings2 = []
 autostrings2 = []
 execution_primitives2 = []
 autostrings = ["InkPicture1_Painted","AutoExec","AutoOpen","Auto_Open","AutoClose","Auto_Close","AutoExit","AutoNew","DocumentOpen","Document_Open","DocumentClose","Document_Close","DocumentBeforeClose","DocumentChange","Document_New","NewDocument","Workbook_Open","WorkbookOpen","Workbook_Activate","Workbook_Close"]
-execution_primitives =[".run","shell","SHCreateThread","RtlMoveMemory","WriteProcessMemory","WriteVirtualMemory","CallWindowProc","EnumResourceTypes","EnumSystemLanguageGroups","EnumUILanguages","EnumDateFormats","EnumCalendarInfo","EnumTimeFormats","SHCreateThread","GrayString","CreateTimerQueueTimer","CreateProcess","Win32_Process"]
+execution_primitives =[".run","shell","SHCreateThread","RtlMoveMemory","WriteProcessMemory","WriteVirtualMemory","CallWindowProc","EnumResourceTypes","EnumSystemLanguageGroups","EnumUILanguages","EnumDateFormats","EnumCalendarInfo","EnumTimeFormats","SHCreateThread","GrayString","CreateTimerQueueTimer","CreateProcess","Win32_Process","MacScript"]
 def build_opt_string():
     optstr = ""
     if options.i or options.a or options.w or options.f:
