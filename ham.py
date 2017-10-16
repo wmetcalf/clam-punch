@@ -43,6 +43,7 @@ parser.add_option("--target",dest="target", type="int", default=2, help="it's a 
 parser.add_option("--normwhite",dest="normwhite", action="store_true", default=False, help="Some targets clamav will normalize whitespace in the backgroup, so do the same")
 parser.add_option("--maxsplit",dest="maxsplit", type="int", default=0, help="remove wildcards from sig replace with max distance format like {0-500} where --maxplit=500")
 parser.add_option("-i",dest="nocase", action="store_true", default=False,help="make the resulting sig nocase")
+parser.add_option("-l",dest="lwsom", action="store_true", default=False,help="make the resulting sig nocase")
 (options, args) = parser.parse_args()
 
 include_regex = None
@@ -69,6 +70,8 @@ if options.input_file and os.path.exists(options.input_file):
     for dapoop in lines:
         if options.normwhite:
             dapoop = re.sub(r'[\r\n\s\t]+',"\x20",dapoop)
+        if options.nocase:
+            dapoop = dapoop.lower()
         if include_regex:
             m=include_regex.search(dapoop)
             if m and m.group(0) not in target_strings:
@@ -90,6 +93,8 @@ elif(options.dir):
             dapoop=open(entry).read()
             if options.normwhite:
                 dapoop = re.sub(r'[\r\n\s\t]+',"\x20",dapoop)
+            if options.nocase:
+                dapoop = dapoop.lower()
             if include_regex:
                 m=include_regex.search(dapoop)
                 if m and m.group(0) not in target_strings:
@@ -129,9 +134,17 @@ print("finding klcs")
 common = hamming_klcs(target_strings)
 print("steaming dem clams")
 ndb = ndb_from_common_sequence(target_strings, common)
+
+if not options.lwsom:
+    disass=ndb.split('*')
+    reass=[]
+    for entry in disass:
+        if re.match("^(?:[0[9dabc]|20)+$",entry) == None:
+            reass.append(entry)
+    ndb="*".join(reass)
+
 if options.nocase:
     ndb = ndb + "::i"
 if options.maxsplit > 0:
     ndb = re.sub(r'\*',"{0-%s}" % (options.maxsplit),ndb)
-
 print("{0}{1}".format(sig,ndb))
