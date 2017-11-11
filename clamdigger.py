@@ -124,9 +124,9 @@ optstr = build_opt_string()
 optstr3b = optstr + ";"
 sig = sig +  optstr3b.join(strings2) + optstr
 if options.auto:
-    sig = sig + ";" + optstr3b.join(autostrings2) + optstr
+    sig = sig + ";" + "::i;".join(autostrings2) + "::i"
     if options.exeprime:
-        sig = sig + ";" + optstr3b.join(execution_primitives2) + optstr
+        sig = sig + ";" + "::i;".join(execution_primitives2) + "::i"
 elif options.exeprime:
-    sig = sig + ";" + optstr3b.join(execution_primitives2) + optstr
+    sig = sig + ";" + "::i;".join(execution_primitives2) + "::i"
 print sig
