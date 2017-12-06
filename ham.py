@@ -3,7 +3,7 @@ try:
     import re2 as re
 except ImportError:
     import re
-
+import binascii
 import sys
 from optparse import OptionParser
 import glob
@@ -42,6 +42,7 @@ parser.add_option("-P", dest="i_re", type="string", help="Must match this regex 
 parser.add_option("--target",dest="target", type="int", default=2, help="it's a clamav target, it's a number. From clamav man:%s" % (targetstring))
 parser.add_option("--normwhite",dest="normwhite", action="store_true", default=False, help="Some targets clamav will normalize whitespace in the backgroup, so do the same")
 parser.add_option("--maxsplit",dest="maxsplit", type="int", default=0, help="remove wildcards from sig replace with max distance format like {0-500} where --maxplit=500")
+parser.add_option("--seqrepl",dest="seqrepl", type="int", default=0,help="replace repeating byte sequences longer than argument with length of sequence minumum of 8.Good starting value might be 20")
 parser.add_option("-i",dest="nocase", action="store_true", default=False,help="make the resulting sig nocase")
 parser.add_option("-l",dest="lwsom", action="store_true", default=False,help="make the resulting sig nocase")
 (options, args) = parser.parse_args()
@@ -141,6 +142,30 @@ if not options.lwsom:
     for entry in disass:
         if re.match("^(?:[0[9dabc]|20)+$",entry) == None:
             reass.append(entry)
+    ndb="*".join(reass)
+
+
+def replacenulls(nullmatch):
+    nullseqlen=len(nullmatch) - 4
+    return "%sclamnullseqrep{%s}%s" % (nullmatch[0:2],nullseqlen,nullmatch[-2:])
+
+def addmatch(match):
+    tmp=binascii.unhexlify(match[4:-4])
+    tmp=tmp.replace("clamnullseqrep","")
+    return match[0:4] + tmp + match[-4:]
+
+if options.seqrepl and options.seqrepl > 0:
+    if options.seqrepl < 8:
+        options.seqrepl = 8
+
+    disass=ndb.split('*')
+    reass=[]
+    for entry in disass:
+        buflen=len(entry)
+        buff=binascii.unhexlify(entry)                    
+        buff=re.sub(r'(.)\1{%s,}' % (options.seqrepl),lambda m: replacenulls(m.group()),buff)
+        buff=re.sub(r'.{4}636c616d6e756c6c7365717265707b.+?7d.{4}',lambda m: addmatch(m.group()),binascii.hexlify(buff))
+        reass.append(buff)
     ndb="*".join(reass)
 
 if options.nocase:
