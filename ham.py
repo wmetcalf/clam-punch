@@ -45,12 +45,15 @@ parser.add_option("--maxsplit",dest="maxsplit", type="int", default=0, help="rem
 parser.add_option("--seqrepl",dest="seqrepl", type="int", default=0,help="replace repeating byte sequences longer than argument with length of sequence minumum of 8.Good starting value might be 20")
 parser.add_option("-i",dest="nocase", action="store_true", default=False,help="make the resulting sig nocase")
 parser.add_option("-l",dest="lwsom", action="store_true", default=False,help="make the resulting sig nocase")
+parser.add_option("--sizerange",dest="sizerange", action="store_true", default=False,help="make the resulting sig nocase") 
+
 (options, args) = parser.parse_args()
 
 include_regex = None
 target_strings = []
 matches = []
 misses = []
+size_list = []
 
 if options.i_re:
     try:
@@ -90,6 +93,7 @@ elif(options.dir):
        sys.exit(-1)
     if len(flist) > 1:
         for entry in flist:
+            size_list.append(int(os.path.getsize(entry)))
             print entry
             dapoop=open(entry).read()
             if options.normwhite:
@@ -110,8 +114,10 @@ print "finished loading files"
 if not options.sname:
    print "need a signame via -s"
    sys.exit(-1)
-
-sig = options.sname + ";Engine:81-255,Target:%s;(0);" % (options.target)
+if options.sizerange:
+    sig = options.sname + ";Engine:81-255,FileSize:%s-%s,Target:%s;(0);" % (min(size_list), max(size_list), options.target)
+else:
+    sig = options.sname + ";Engine:81-255,Target:%s;(0);" % (options.target)
 if include_regex:
     for entry in matches:
         print("match: {0}".format(entry))
