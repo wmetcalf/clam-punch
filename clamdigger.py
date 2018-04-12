@@ -59,7 +59,7 @@ for entry in strings:
     if options.ppstr and len(entry) < 255:
         strlen = "%0.2X" % len(entry)
         strings2.append("%s%s" % (strlen,entry.encode("hex")))
-    if options.wide:
+    elif options.wide:
         i = 0
         newstr = ""
         while i < len(entry):
@@ -129,4 +129,5 @@ if options.auto:
         sig = sig + ";" + "::i;".join(execution_primitives2) + "::i"
 elif options.exeprime:
     sig = sig + ";" + "::i;".join(execution_primitives2) + "::i"
+sig=re.sub(r'(?<!2a)2a2a2a2a(?!2a)',r'*',sig)
 print sig
