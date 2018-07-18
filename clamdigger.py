@@ -130,5 +130,5 @@ if options.auto:
 elif options.exeprime:
     sig = sig + ";" + "::i;".join(execution_primitives2) + "::i"
 sig=re.sub(r'(?<!2a)2a2a2a2a(?!2a)',r'*',sig)
-sig=re.sub(r'(?<!3f)3f3f3f3f(?!3f)',r'?',sig)
+sig=re.sub(r'(?<!3f)3f3f3f3f(?!3f)',r'??',sig)
 print sig
