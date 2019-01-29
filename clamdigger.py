@@ -67,7 +67,10 @@ for entry in strings:
            i = i + 1
         strings2.append(newstr)
     else:
-        strings2.append(entry.encode("hex"))
+        if entry.lower() == "attribute vb_":
+            strings2.append("0:" + entry.encode("hex"))
+        else:
+            strings2.append(entry.encode("hex"))
 if not strings:
    print "need a set of target strings via -t"
    sys.exit(-1)
