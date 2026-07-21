@@ -37,7 +37,7 @@ are normalized (hex encoding is decoded), numbers are parsed and normal-ized, lo
 parser = OptionParser(usage="https://www.youtube.com/watch?v=nLB4dU3Yc6M\nexample:\n\n./ham.py -i --maxsplit=500 --normwhite --target=7 -P '.{0,500}(?i)ActiveXObject.{0,500}' -s LockyJS -d /home/coz/Downloads/LockyJS")
 parser.add_option("-s", dest="sname", type="string", help="the sig name dumb-dumb")
 parser.add_option("-d", dest="dir", type="string", help="dir of similar samples to H.A.M")
-parser.add_option("-f", dest="input_file", type="string", help="will read a LF seperated file and treat each line as a seperate string to HAM")
+parser.add_option("-f", dest="input_file", type="string", help="will read a LF separated file and treat each line as a separate string to HAM")
 parser.add_option("-P", dest="i_re", type="string", help="Must match this regex to be included as input string '(?i).{0,100}poopship.{0,500}")
 parser.add_option("--target",dest="target", type="int", default=2, help="it's a clamav target, it's a number. From clamav man:%s" % (targetstring))
 parser.add_option("--normwhite",dest="normwhite", action="store_true", default=False, help="Some targets clamav will normalize whitespace in the backgroup, so do the same")
